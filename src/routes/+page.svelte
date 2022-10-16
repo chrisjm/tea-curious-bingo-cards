@@ -1,5 +1,6 @@
 <script lang="ts">
 	import clone from 'just-clone';
+	import { Confetti } from 'svelte-confetti';
 
 	interface Card {
 		id: string;
@@ -17,7 +18,7 @@
 	const availableCards: Record<string, Card> = {
 		mist: {
 			id: 'mist',
-			name: 'Mist Card',
+			name: 'Mist',
 			backgroundGradient: 'from-cyan-300 to-cyan-500',
 			cardLabelClass: 'text-cyan-300',
 			data: [
@@ -89,10 +90,24 @@
 	$: backgroundGradient = availableCards[selectedTab ?? 0].backgroundGradient;
 	$: cardName = availableCards[selectedTab ?? 0].name;
 	$: cardLabelClass = availableCards[selectedTab ?? 0].cardLabelClass;
+
+	// Check each row if at least one selection is true on every row
+	$: completed = currentSelection.map((row) => row.some(Boolean)).every(Boolean);
 </script>
 
+<svelte:head>
+	<title>Tea Curious - Moving Oolong! Challenge</title>
+</svelte:head>
+
+{#if completed}
+	<div class="confetti-container">
+		<Confetti x={[-5, 5]} y={[0, 0.1]} amount={400} fallDistance="100vh" duration="3000" infinite />
+	</div>
+{/if}
+
 <div class="bg-gradient-to-b {backgroundGradient}">
-	<div class="max-w-2xl mx-auto p-4">
+	<div class="max-w-sm sm:max-w-lg mx-auto p-4">
+		<!-- Nav -->
 		<div class="mb-4">
 			<div class="sm:hidden">
 				<label for="tabs" class="sr-only">Select a tab</label>
@@ -125,23 +140,22 @@
 			</div>
 		</div>
 
-		<h1 class="text-2xl font-semibold text-cyan-50 uppercase text-center tracking-wider">
+		<!-- Header -->
+		<h1 class="text-lg font-semibold text-cyan-50 uppercase text-center tracking-wider">
 			Tea Curious <span class="font-light">Tea Challenge</span>
 		</h1>
-		<h2 class="text-6xl font-bold text-cyan-50 text-center">Moving Oolong!</h2>
+		<h2 class="text-3xl sm:text-4xl font-bold text-cyan-50 text-center tracking-wider">
+			Moving Oolong!
+		</h2>
 
+		<!-- Card -->
 		{#if selectedTab}
-			<div class="grid grid-cols-5 gap-3 mt-4 relative">
-				<div
-					class="absolute text-xl font-bold uppercase rotate-[270deg] bottom-12 -right-20 {cardLabelClass}"
-				>
-					{cardName}
-				</div>
+			<div class="grid grid-cols-5 gap-1 sm:gap-3 mt-4 relative">
 				<div class="col-span-5 p-2 text-center uppercase bg-sky-700 text-white">Start</div>
 				{#each availableCards[selectedTab]?.data ?? [] as row, i}
 					{#each row as square, j}
 						<button
-							class="flex items-center justify-center text-center h-20 p-2 bg-cyan-200 hover:bg-cyan-300 cursor-pointer font-light focus:outline-cyan-400"
+							class="flex items-center justify-center text-center h-12 sm:h-20 text-xs sm:text-sm p-2 bg-cyan-200 hover:bg-cyan-300 cursor-pointer font-light focus:outline-cyan-400"
 							class:bg-cyan-700={currentSelection[i][j]}
 							class:text-white={currentSelection[i][j]}
 							class:hover:bg-cyan-700={currentSelection[i][j]}
@@ -156,3 +170,17 @@
 		{/if}
 	</div>
 </div>
+
+<style>
+	.confetti-container {
+		position: fixed;
+		top: -50px;
+		left: 0;
+		height: 100vh;
+		width: 100vw;
+		display: flex;
+		justify-content: center;
+		overflow: hidden;
+		pointer-events: none;
+	}
+</style>
