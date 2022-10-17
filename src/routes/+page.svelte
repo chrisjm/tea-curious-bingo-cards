@@ -101,11 +101,11 @@
 
 {#if completed}
 	<div class="confetti-container">
-		<Confetti x={[-5, 5]} y={[0, 0.1]} amount={400} fallDistance="100vh" duration="3000" infinite />
+		<Confetti x={[-5, 5]} y={[0, 0.1]} amount={500} fallDistance="100vh" duration="3000" infinite />
 	</div>
 {/if}
 
-<div class="bg-gradient-to-b {backgroundGradient} h-screen sm:h-auto">
+<div class="bg-gradient-to-b {backgroundGradient} h-screen xs:h-full">
 	<div class="max-w-sm sm:max-w-lg mx-auto p-4">
 		<!-- Nav -->
 		<div class="mb-4">
