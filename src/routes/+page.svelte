@@ -105,7 +105,7 @@
 	</div>
 {/if}
 
-<div class="bg-gradient-to-b {backgroundGradient}">
+<div class="bg-gradient-to-b {backgroundGradient} h-screen sm:h-auto">
 	<div class="max-w-sm sm:max-w-lg mx-auto p-4">
 		<!-- Nav -->
 		<div class="mb-4">
