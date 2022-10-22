@@ -43,7 +43,7 @@
 	</div>
 {/if}
 
-<div class="bg-gradient-to-b {backgroundGradient}">
+<div class="bg-cover {selectedCard} h-screen sm:h-auto">
 	<div class="max-w-sm sm:max-w-lg mx-auto p-4">
 		<CardSelector {cards} handleSelection={handleCardSelection} {selectedCard} />
 		<Header />
@@ -65,5 +65,17 @@
 		justify-content: center;
 		overflow: hidden;
 		pointer-events: none;
+	}
+
+	.mist {
+		background-image: url('/mist.png');
+	}
+
+	.nightshift {
+		background-image: url('/nightshift.png');
+	}
+
+	.woodfire {
+		background-image: url('/woodfire.png');
 	}
 </style>
