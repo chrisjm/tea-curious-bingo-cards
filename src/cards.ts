@@ -39,8 +39,8 @@ export const cards: Record<string, Card> = {
 			]
 		]
 	},
-	nightShift: {
-		id: 'nightShift',
+	nightshift: {
+		id: 'nightshift',
 		name: 'Night Shift',
 		backgroundGradient: 'from-slate-300 to-slate-500',
 		cardLabelClass: 'text-slate-300',
