@@ -4,7 +4,7 @@
 	import Card from '../components/Card.svelte';
 	import Header from '../components/Header.svelte';
 	import { cards } from '../cards';
-	import { currentCard } from '../stores/localStorage';
+	import { currentCard } from '../stores/currentCard';
 	import { Confetti } from 'svelte-confetti';
 
 	const emptySelection: boolean[][] = [

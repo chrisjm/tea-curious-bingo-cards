@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { cards } from '../cards';
-	import { currentCard } from '../stores/localStorage';
+	import { currentCard } from '../stores/currentCard';
 
 	export let selected: boolean;
 	export let handleSelection: (i: number, j: number) => void;

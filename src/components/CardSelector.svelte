@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Card } from '../cards';
-	import { currentCard } from '../stores/localStorage';
+	import { currentCard } from '../stores/currentCard';
 
 	interface Tab {
 		id: string;
