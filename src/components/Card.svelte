@@ -9,7 +9,9 @@
 </script>
 
 <div class="grid grid-cols-5 gap-1 sm:gap-3 mt-4 relative">
-	<div class="col-span-5 p-2 rounded text-center uppercase bg-sky-700 text-white">Start</div>
+	<div class="col-span-5 p-1 rounded text-center uppercase bg-sky-700 text-white font-light">
+		Start
+	</div>
 	{#each cards[selectedCard]?.data ?? [] as row, i}
 		{#each row as square, j}
 			<Square
@@ -21,5 +23,7 @@
 			/>
 		{/each}
 	{/each}
-	<div class="col-span-5 p-2 rounded text-center uppercase bg-emerald-700 text-white">Finish</div>
+	<div class="col-span-5 p-1 rounded text-center uppercase bg-emerald-700 text-white font-light">
+		Finish
+	</div>
 </div>
