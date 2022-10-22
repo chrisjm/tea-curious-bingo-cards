@@ -1,5 +1,7 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 </script>
 
-<slot />
+<div class="h-screen xs:h-auto">
+	<slot />
+</div>
