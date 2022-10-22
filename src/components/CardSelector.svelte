@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Card } from '../cards';
+	import { currentCard } from '../stores/localStorage';
 
 	interface Tab {
 		id: string;
@@ -8,7 +9,6 @@
 
 	export let cards: Record<string, Card>;
 	export let handleSelection: (id: string) => void;
-	export let selectedCard: string;
 
 	$: tabs = Object.values(cards).map((tab) => {
 		return {
@@ -25,9 +25,9 @@
 			id="tabs"
 			name="tabs"
 			class="block w-full rounded-md border-gray-300 focus:border-cyan-500 focus:ring-cyan-500"
-			bind:value={selectedCard}
+			bind:value={$currentCard}
 			on:change={() => {
-				handleSelection(selectedCard);
+				handleSelection($currentCard);
 			}}
 		>
 			{#each tabs as tab}
@@ -40,8 +40,8 @@
 			{#each tabs as tab}
 				<button
 					class="text-gray-800 hover:text-gray-900 px-3 py-2 font-medium text-sm rounded-md"
-					class:bg-gray-100={tab.id === selectedCard}
-					class:text-gray-700={tab.id === selectedCard}
+					class:bg-gray-100={tab.id === $currentCard}
+					class:text-gray-700={tab.id === $currentCard}
 					on:click={() => handleSelection(tab.id)}>{tab.label}</button
 				>
 			{/each}

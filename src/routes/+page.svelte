@@ -4,6 +4,7 @@
 	import Card from '../components/Card.svelte';
 	import Header from '../components/Header.svelte';
 	import { cards } from '../cards';
+	import { currentCard } from '../stores/localStorage';
 	import { Confetti } from 'svelte-confetti';
 
 	const emptySelection: boolean[][] = [
@@ -15,16 +16,13 @@
 	];
 
 	let currentSelection = clone(emptySelection);
-	let selectedCard = 'mist';
 
 	// Hacky and lenient: Check each row if at least one selection is true on every row
 	// TODO: Better way would be to check each row and ensure the previous row's offset is <= 1
 	$: completed = currentSelection.map((row) => row.some(Boolean)).every(Boolean);
 
-	$: backgroundGradient = cards[selectedCard ?? 0].backgroundGradient;
-
 	function handleCardSelection(id: string) {
-		selectedCard = id;
+		$currentCard = id;
 		currentSelection = clone(emptySelection);
 	}
 
@@ -43,14 +41,11 @@
 	</div>
 {/if}
 
-<div class="bg-cover {selectedCard} h-screen sm:h-auto">
+<div class="bg-cover {$currentCard} h-screen sm:h-auto">
 	<div class="max-w-sm sm:max-w-lg mx-auto p-4">
-		<CardSelector {cards} handleSelection={handleCardSelection} {selectedCard} />
+		<CardSelector {cards} handleSelection={handleCardSelection} />
 		<Header />
-
-		{#if selectedCard}
-			<Card {cards} {selectedCard} {currentSelection} handleSelection={handleSquareSelection} />
-		{/if}
+		<Card {cards} {currentSelection} handleSelection={handleSquareSelection} />
 	</div>
 </div>
 
@@ -65,6 +60,7 @@
 		justify-content: center;
 		overflow: hidden;
 		pointer-events: none;
+		z-index: 10;
 	}
 
 	.mist {

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { cards } from '../cards';
+	import { currentCard } from '../stores/localStorage';
 
 	export let selected: boolean;
-	export let selectedCard: string;
 	export let handleSelection: (i: number, j: number) => void;
 	export let row: number;
 	export let column: number;
@@ -14,5 +14,5 @@
 	class="flex items-center justify-center text-center rounded h-16 sm:h-20 text-xs sm:text-sm p-2 bg-cyan-200 hover:bg-cyan-300 cursor-pointer font-light focus:outline-cyan-400 {selectedClasses}"
 	on:click={() => handleSelection(row, column)}
 >
-	{cards[selectedCard].data[row][column]}
+	{cards[$currentCard].data[row][column]}
 </button>
