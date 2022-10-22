@@ -4,6 +4,8 @@
 	import Card from '../components/Card.svelte';
 	import Header from '../components/Header.svelte';
 	import { cards } from '../cards';
+	import { currentCard } from '../stores/currentCard';
+	import { currentSelection } from '../stores/currentSelection';
 	import { Confetti } from 'svelte-confetti';
 
 	const emptySelection: boolean[][] = [
@@ -14,22 +16,27 @@
 		new Array(5)
 	];
 
-	let currentSelection = clone(emptySelection);
-	let selectedCard = 'mist';
+	$: {
+		if ($currentCard && !$currentSelection[$currentCard]) {
+			$currentSelection = {
+				...$currentSelection,
+				[$currentCard]: clone(emptySelection)
+			};
+		}
+	}
 
 	// Hacky and lenient: Check each row if at least one selection is true on every row
 	// TODO: Better way would be to check each row and ensure the previous row's offset is <= 1
-	$: completed = currentSelection.map((row) => row.some(Boolean)).every(Boolean);
-
-	$: backgroundGradient = cards[selectedCard ?? 0].backgroundGradient;
+	$: completed = ($currentSelection?.[$currentCard] ?? [])
+		.map((row) => row.some(Boolean))
+		.every(Boolean);
 
 	function handleCardSelection(id: string) {
-		selectedCard = id;
-		currentSelection = clone(emptySelection);
+		$currentCard = id;
 	}
 
 	function handleSquareSelection(i: number, j: number) {
-		currentSelection[i][j] = !currentSelection[i][j];
+		$currentSelection[$currentCard][i][j] = !$currentSelection[$currentCard][i][j];
 	}
 </script>
 
@@ -43,16 +50,15 @@
 	</div>
 {/if}
 
-<div class="bg-cover {selectedCard} h-screen sm:h-auto">
-	<div class="max-w-sm sm:max-w-lg mx-auto p-4">
-		<CardSelector {cards} handleSelection={handleCardSelection} {selectedCard} />
-		<Header />
-
-		{#if selectedCard}
-			<Card {cards} {selectedCard} {currentSelection} handleSelection={handleSquareSelection} />
-		{/if}
+{#if $currentCard}
+	<div class="bg-cover {$currentCard} h-screen sm:h-auto">
+		<div class="max-w-sm sm:max-w-lg mx-auto p-4">
+			<CardSelector {cards} handleSelection={handleCardSelection} />
+			<Header />
+			<Card {cards} handleSelection={handleSquareSelection} />
+		</div>
 	</div>
-</div>
+{/if}
 
 <style>
 	.confetti-container {
@@ -65,6 +71,7 @@
 		justify-content: center;
 		overflow: hidden;
 		pointer-events: none;
+		z-index: 10;
 	}
 
 	.mist {
