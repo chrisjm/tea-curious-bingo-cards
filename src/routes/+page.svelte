@@ -5,6 +5,7 @@
 	import Header from '../components/Header.svelte';
 	import { cards } from '../cards';
 	import { currentCard } from '../stores/currentCard';
+	import { currentSelection } from '../stores/currentSelection';
 	import { Confetti } from 'svelte-confetti';
 
 	const emptySelection: boolean[][] = [
@@ -15,19 +16,27 @@
 		new Array(5)
 	];
 
-	let currentSelection = clone(emptySelection);
+	$: {
+		if ($currentCard && !$currentSelection[$currentCard]) {
+			$currentSelection = {
+				...$currentSelection,
+				[$currentCard]: clone(emptySelection)
+			};
+		}
+	}
 
 	// Hacky and lenient: Check each row if at least one selection is true on every row
 	// TODO: Better way would be to check each row and ensure the previous row's offset is <= 1
-	$: completed = currentSelection.map((row) => row.some(Boolean)).every(Boolean);
+	$: completed = ($currentSelection?.[$currentCard] ?? [])
+		.map((row) => row.some(Boolean))
+		.every(Boolean);
 
 	function handleCardSelection(id: string) {
 		$currentCard = id;
-		currentSelection = clone(emptySelection);
 	}
 
 	function handleSquareSelection(i: number, j: number) {
-		currentSelection[i][j] = !currentSelection[i][j];
+		$currentSelection[$currentCard][i][j] = !$currentSelection[$currentCard][i][j];
 	}
 </script>
 
@@ -41,13 +50,15 @@
 	</div>
 {/if}
 
-<div class="bg-cover {$currentCard} h-screen sm:h-auto">
-	<div class="max-w-sm sm:max-w-lg mx-auto p-4">
-		<CardSelector {cards} handleSelection={handleCardSelection} />
-		<Header />
-		<Card {cards} {currentSelection} handleSelection={handleSquareSelection} />
+{#if $currentCard}
+	<div class="bg-cover {$currentCard} h-screen sm:h-auto">
+		<div class="max-w-sm sm:max-w-lg mx-auto p-4">
+			<CardSelector {cards} handleSelection={handleCardSelection} />
+			<Header />
+			<Card {cards} handleSelection={handleSquareSelection} />
+		</div>
 	</div>
-</div>
+{/if}
 
 <style>
 	.confetti-container {

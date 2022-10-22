@@ -4,7 +4,6 @@
 	import Square from './Square.svelte';
 
 	export let cards: Record<string, Card>;
-	export let currentSelection: boolean[][];
 	export let handleSelection: (i: number, j: number) => void;
 </script>
 
@@ -12,14 +11,9 @@
 	<div class="col-span-5 p-1 rounded text-center uppercase bg-sky-700 text-white font-light">
 		Start
 	</div>
-	{#each cards[$currentCard]?.data ?? [] as row, i}
+	{#each cards[$currentCard].data ?? [] as row, i}
 		{#each row as square, j}
-			<Square
-				selected={currentSelection[i][j]}
-				{handleSelection}
-				row={i}
-				column={j}
-			/>
+			<Square {handleSelection} row={i} column={j} />
 		{/each}
 	{/each}
 	<div class="col-span-5 p-1 rounded text-center uppercase bg-emerald-700 text-white font-light">

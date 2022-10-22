@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { cards } from '../cards';
 	import { currentCard } from '../stores/currentCard';
+	import { currentSelection } from '../stores/currentSelection';
 
-	export let selected: boolean;
 	export let handleSelection: (i: number, j: number) => void;
 	export let row: number;
 	export let column: number;
 
+	$: selected = $currentSelection[$currentCard]?.[row][column];
 	$: selectedClasses = selected ? '!bg-cyan-700 text-white hover:bg-cyan-700' : '';
 </script>
 
