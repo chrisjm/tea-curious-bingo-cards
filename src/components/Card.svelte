@@ -12,7 +12,7 @@
 	{#each cards[selectedCard]?.data ?? [] as row, i}
 		{#each row as square, j}
 			<button
-				class="flex items-center justify-center text-center h-12 sm:h-20 text-xs sm:text-sm p-2 bg-cyan-200 hover:bg-cyan-300 cursor-pointer font-light focus:outline-cyan-400"
+				class="flex items-center justify-center text-center rounded h-16 sm:h-20 text-xs sm:text-sm p-2 bg-cyan-200 hover:bg-cyan-300 cursor-pointer font-light focus:outline-cyan-400"
 				class:bg-cyan-700={currentSelection[i][j]}
 				class:text-white={currentSelection[i][j]}
 				class:hover:bg-cyan-700={currentSelection[i][j]}
