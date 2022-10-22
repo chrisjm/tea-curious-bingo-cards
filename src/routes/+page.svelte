@@ -68,14 +68,14 @@
 	}
 
 	.mist {
-		background-image: url('/mist.png');
+		background-image: url('/mist.jpg');
 	}
 
 	.nightshift {
-		background-image: url('/nightshift.png');
+		background-image: url('/nightshift.jpg');
 	}
 
 	.woodfire {
-		background-image: url('/woodfire.png');
+		background-image: url('/woodfire.jpg');
 	}
 </style>
