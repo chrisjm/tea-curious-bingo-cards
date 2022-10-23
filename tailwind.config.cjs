@@ -2,7 +2,11 @@
 module.exports = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		extend: {}
+		extend: {},
+		fontFamily: {
+			sans: ['Raleway', 'sans-serif'],
+			serif: ['Bitter', 'serif']
+		}
 	},
 	plugins: [require('@tailwindcss/forms')]
 };
