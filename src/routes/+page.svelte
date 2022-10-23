@@ -52,7 +52,7 @@
 {/if}
 
 {#if $currentCard}
-	<div class="bg-cover {$currentCard} h-screen sm:h-auto">
+	<div class="bg-cover {$currentCard}">
 		<div class="flex flex-col max-w-sm sm:max-w-lg mx-auto p-4">
 			<CardSelector {cards} handleSelection={handleCardSelection} />
 			<Header />
