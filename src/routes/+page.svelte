@@ -3,6 +3,7 @@
 	import CardSelector from '../components/CardSelector.svelte';
 	import Card from '../components/Card.svelte';
 	import Header from '../components/Header.svelte';
+	import Footer from '../components/Footer.svelte';
 	import { cards } from '../cards';
 	import { currentCard } from '../stores/currentCard';
 	import { currentSelection } from '../stores/currentSelection';
@@ -51,11 +52,12 @@
 {/if}
 
 {#if $currentCard}
-	<div class="bg-cover {$currentCard} h-screen sm:h-auto">
-		<div class="max-w-sm sm:max-w-lg mx-auto p-4">
+	<div class="bg-cover {$currentCard}">
+		<div class="flex flex-col max-w-sm sm:max-w-lg mx-auto p-4">
 			<CardSelector {cards} handleSelection={handleCardSelection} />
 			<Header />
 			<Card {cards} handleSelection={handleSquareSelection} />
+			<Footer />
 		</div>
 	</div>
 {/if}
